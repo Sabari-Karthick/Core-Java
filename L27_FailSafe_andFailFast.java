@@ -3,7 +3,7 @@ import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * @author _karthick
+ * @author _karthick V94SP9F8NYR6GHB26S6AEQY2
  *
  *modification of collection while accessing the data -->Structural modification
  *Structural modification leads to infinity loop
