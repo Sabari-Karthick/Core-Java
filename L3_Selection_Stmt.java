@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class L3 {//selection
+public class L3_Selection_Stmt {//selection
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);

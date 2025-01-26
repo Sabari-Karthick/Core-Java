@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class L4 {     //Iterations
+public class L4_Iterations {     //Iterations
 	public static void main(String[] args) {
 		Scanner sc =new Scanner(System.in);
 		int i;
