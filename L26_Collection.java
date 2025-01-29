@@ -135,7 +135,50 @@ public class L26_Collection{
 		}
 	//*****************************************************************//	
 	
-	    
+	 /**
+private boolean isValidLane(Lane lane) {
+    boolean isLaneValid = true;
+    List<Pair<Long, Long>> locationPairList = getLocationPairListFromLane(lane);
+    int from = 0, to = 1;
+    while (to < locationPairList.size()){
+        Pair<Long, Long> fromPair = locationPairList.get(from);
+        Pair<Long, Long> toPair = locationPairList.get(to);
+        if((Objects.equals(fromPair.getLeft(),toPair.getLeft())) && (Objects.equals(fromPair.getRight(),toPair.getRight()))){
+            isLaneValid=false;
+            break;
+        }else{
+            from++;
+            to++;
+        }
+    }
+
+
+    return isLaneValid;
+}
+
+private List<Pair<Long, Long>> getLocationPairListFromLane(Lane lane) {
+    List<Pair<Long, Long>> locationPairList = new ArrayList<>();
+    if (lane.getFromLocationId() != null) {
+        locationPairList.add(Pair.of(lane.getFromCity(), lane.getFromLocationId()));
+    }
+    if (lane.getToLocationId() != null) {
+        locationPairList.add(Pair.of(lane.getToCity(), lane.getToLocationId()));
+    }
+    if (lane.getMid1LocationId() != null) {
+        locationPairList.add(Pair.of(lane.getMid1City(), lane.getMid1LocationId()));
+    }
+    if (lane.getMid2LocationId() != null) {
+        locationPairList.add(Pair.of(lane.getMid2City(), lane.getMid2LocationId()));
+    }
+    if (lane.getMid3LocationId() != null) {
+        locationPairList.add(Pair.of(lane.getMid3LocationId(), lane.getMid3City()));
+    }
+    return locationPairList;
+}
+
+*/
+
+	
 	
 	
 	
