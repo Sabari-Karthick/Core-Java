@@ -11,24 +11,26 @@
  *              -> 2. Anonymous inner class that implements an interface.
  *              -> 3. Anonymous inner class that defined inside method arguments.
  */
-class PopCorm{
+class PopCorm {
 	void taste() {
 		System.out.println("Spicy");
 	}
 }
+
 public class L8_InnerClass4 {
-public static void main(String[] args) {
-	PopCorm p = new PopCorm() {//We are creating child class without name for the PopCorn class and for that child class we are creating an object with Parent PopCorn reference.
-		@Override
-		void taste() { //if you want  to extend a class just to overide then use AIC
-           tastey();
-		   System.out.println("salty");
-		}
-		void tastey() {
-			   System.out.println("salty and spicy");
+	public static void main(String[] args) {
+		PopCorm p = new PopCorm() {// We are creating child class without name for the PopCorn class and for that child class we are creating an object with Parent PopCorn reference.
+			@Override
+			void taste() { // if you want to extend a class just to overide then use AIC
+				tastey();
+				System.out.println("salty");
 			}
-	};
-	p.taste();
-//	p.tastey();//CE 
-}
+
+			void tastey() {
+				System.out.println("salty and spicy");
+			}
+		};
+		p.taste();
+		// p.tastey();//Compile Time Error
+	}
 }
