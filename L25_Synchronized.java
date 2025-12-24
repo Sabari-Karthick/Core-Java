@@ -65,6 +65,19 @@ public class L25_Synchronized {
 		t3.join();
 		t4.join();
 
+		// Here the intrinsic is with at the class level.
+		// Means when one thread is executing the synchronized method other threads are not allowed to execute any synchronized method of the same object.
+		// So technically here we are not executing them concurrently. Means they are executing one after another.
+		// So there is no thread interference.
+		// Note :: In Java Monitor Lock is associated with every object. Means every object has its own lock. 
+		// Here there maybe Confusion where the monitor lock is . Is it with Counter class or the L25_Synchronized class.
+		// The monitor lock is with the Counter class object. Because the synchronized keyword is applied to the method of Counter class.
+		// So when a thread enters a synchronized method of a Counter object, it acquires the lock on that specific Counter object.
+		// Other threads trying to access any synchronized method of the same Counter object will be blocked until the lock is released.
+		// Now take the thread t4 is using a differnt method in the same Counter class. That also will be blocked until t3 releases the lock.
+		//We can see the problem that if some other thread holds the intrinsic lock for a class we cant access any other even non-shared resource methods of the same class.
+
+		// To avoid this only there are so locks like ReadWriteLock, StampedLock etc are there in java.util.concurrent.locks package.
 
 
 		// Here we never get 20000 because of the thread interference.
@@ -97,5 +110,27 @@ public class L25_Synchronized {
 		// Like in Code we cant simply put book() method as synchronized. It will make other users wait. And that is not a good user experience.
 		// There are many Better strategies Used But for Application Startup Kinda things and we need synchronization needed means we can go for synchronized keyword.
 		// But even for that instead of method level synchronization we can go for block level synchronization to improve performance. // We see that later.
+
+
+		// Monitor Lock : 
+
+	    /**
+		 *  In Java, every object has an intrinsic(meaning essential) lock or monitor lock associated with it.
+		 *  When a thread wants to execute a synchronized method or block, it must first acquire the monitor lock for the object.
+		 *  It is like a single person room where only one person can enter at a time and they hold the lock until they leave the room.
+		 *  The lock should be available means no other thread is holding the lock is what checked before entering the synchronized method or block.
+		 *  If some other thread is holding the lock, the current thread will be blocked until the lock is released. Means it will be moved to the blocked state.
+		 *  
+		 * 
+		 *  Using synchronized keyword at method level is a coarse-grained approach.
+		 *  What is coarse-grained? --> It means we are locking the entire method for a thread.
+		 *  So there will be scenario we block the code that is not a shared resource.
+		 *  Simply we cant have fine control over what code to be synchronized when we use synchronized at method level.
+		 *  And one more is if the subclass overrides the synchronized method and removes the synchronized keyword, then the synchronization is lost.
+		 * 
+		 * 
+		 * 
+		 * 
+		 */
 	}
 }
