@@ -1,5 +1,6 @@
 class Hi extends Thread
 {
+	@Override
 	public void run() {//start always call run
 		for(int i=1;i<=5;i++) {
 			System.out.println("hi");
@@ -10,6 +11,7 @@ class Hi extends Thread
 }
 class Hello extends Thread
 {
+	@Override
 	public void run() {
 		for(int i=1;i<=5;i++) {
 			System.out.println("hello");

@@ -68,7 +68,7 @@ class Receipt extends Thread {
 }
 
 public class L24_MultiThreading {// Thread Based multitasking in application to show the problem of multithreading the random rate of execution.
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) {
 		Bank2 b = new Bank2();
 		Transaction t = new Transaction();
 		Receipt r = new Receipt();

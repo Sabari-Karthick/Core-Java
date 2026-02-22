@@ -67,11 +67,12 @@ public class L24_MultiThreading1 {// Using Runnable Interface and Use of join() 
 		// System.out.println(t2.isAlive());
 		// System.out.println(t3.isAlive());
 		t1.start();
-		t1.join();// asks main method to join with the t1 thread
+		t1.join();// asks the thread executing this method (main in this case) to join with the t1 thread
+
 		t2.start();
 		t2.join();// join() -> To make another thread to wait till it finish the execution that is the Thread to die
-		t3.start();
 
+		t3.start();
 		t3.join();
 
 
@@ -81,7 +82,7 @@ public class L24_MultiThreading1 {// Using Runnable Interface and Use of join() 
 		// Join ask the thread running here the main thread to wait till the thread on which join is called is completed.
 
 
-		// Good we we have achieved the orchestration of threads using join() method. But why we are not seeing this start and join method in real time applications.
+		// Good we have achieved the orchestration of threads using join() method. But why we are not seeing this start and join method in real time applications.
 		// Because using join() method basically makes the multithreading to a single threading as one thread is waiting for the other to complete its execution.
 		// So the ideal way is to use some other inter thread communication techniques to orchestrate.
 

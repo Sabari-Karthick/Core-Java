@@ -11,7 +11,7 @@
  *             -> Preemptive Scheduling--> In this algorithm, the thread with the highest priority is given the CPU time. 
  *                                         If a new thread with a higher priority arrives, the current thread is preempted (means the current thread is paused and the new thread is given the CPU time)  
  *                                         and the new thread is given the CPU time.
- *             -> non-preemptive Scheduling--> It let the current thread to complete its execution even if a new thread with a higher priority arrives or the current thread pauses itself.
+ *             -> non-preemptive Scheduling--> It let the current thread to complete its execution even if a new thread with a higher priority arrives. New thread will be given priority only if the current thread finishes its execution or it goes to waiting state.
  * 
  * 
  * States: 
@@ -46,6 +46,8 @@ class Weapon implements Runnable {
 		try {
 			Thread.sleep(4000);// to get weapon they need to go meditation
 			// here a chance for next waiting thread is given
+			// Sync on an object means , the thread captures the monitor of that object and other thread cannot access that object until the monitor is released by the first thread.
+			// A thread can enter this block only if it has the monitor of the object, otherwise it will be in waiting state until the monitor is released by the other thread.
 			synchronized (weapon1) {// synchronized so _odin can't get weapon //to lock the resource
 				System.out.println("Kratos got :" + weapon1);
 				Thread.sleep(3000);// to get more weapon
