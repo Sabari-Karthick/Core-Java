@@ -1,0 +1,76 @@
+1. Arrays vs. Collections
+Q: Why do we need the Collection Interface? What's wrong with Arrays?
+
+• Arrays are Fixed: You must declare size upfront. You cannot add an 11th item to a size-10 array.
+
+• Memory Wastage: If you allocate 100 slots but use 5, you waste 95.
+
+• No Helper Methods: Arrays are "dumb." You must manually shift items to remove/add in the middle.
+
+• Collections: Provide Dynamic sizing (grows/shrinks automatically), Standard algorithms (sort, search, shuffle), and Abstraction (you can swap `ArrayList` for `LinkedList` easily).
+
+2. ArrayList Internals
+Q: How does ArrayList grow? Does it create a new array every time?
+
+• Under the hood: It uses a standard array.
+
+• Default Size: Starts with an internal array of size 10.
+
+• Growth Strategy: It does NOT grow one-by-one (that would be too slow due to copying). It grows by a percentage (approx. 50% in Java).
+
+  • Sequence: `10 -> 15 -> 22 -> 33...`
+
+• The Process: When full, it creates a new, larger array, copies all old items over, adds the new item, and discards the old array.
+
+• Trade-off: It uses "Amortized Constant Time." Copying is expensive but happens rarely. We trade a bit of memory (unused slots) to save CPU time.
+
+3. HashMap Internals (The "Gold Standard")
+Q: How does a HashMap work internally?
+
+• Structure: It is an Array of Nodes (called "Buckets").
+
+• The Index (Hashing): The `hashCode()` converts a Key into a number -> The Modulo operator (`%`) fits that number into the array size (e.g., `hash % 16 = index 9`).
+
+• Collisions: When two keys land in the same bucket.
+
+  • Handling: We use Chaining (a Linked List stores all items in that bucket).
+
+  • Java 8 Optimization: If a chain gets too long (threshold of 8), it converts the List into a Red-Black Tree (improves search from O(n) to O(log n)).
+
+• Resizing: Controlled by the Load Factor (default 0.75). When the map is 75% full, the array size doubles, and every key is Rehashed to a new slot.
+
+4. HashMap Logic Deep Dive
+Q: Why doesn't List have a Load Factor?
+
+• Lists use Direct Access (Math). Accessing index 5 is instant regardless of how full the array is.
+
+• Maps use Probabilistic Access. Performance depends on "empty space" to avoid collisions. We must resize early (at 75%) to keep chains short and fast.
+
+Q: Explain the `hashCode` and `equals` contract.
+
+• The Rule: If `equals()` is TRUE, `hashCode()` MUST be the same.
+
+• Why: `hashCode` is the "GPS to the neighborhood" (Bucket). `equals` is the "House Number" (Verification). If the GPS (hash) is wrong, you look in the wrong bucket and will never find the object, even if it is "equal."
+
+• Collision vs. Contract:
+
+  • Collision: Same Hash + Different Equals. (Allowed; they share a bucket).
+
+  • Violation: Different Hash + Same Equals. (Forbidden; data is effectively lost).
+
+Q: How is HashMap O(1) if we have to traverse a chain?
+
+• O(1) = Average Case. With a good hash function, collisions are rare, so chains are very short (1-2 steps).
+
+• Math vs. Counting: Accessing a bucket index is not counting 1..100. It is a math calculation (`Start Address + Index * Size`) which is instant (Teleportation).
+
+• Worst Case: O(n) if all keys collide (bad hash function), though Trees mitigate this.
+
+5. HashMap vs. Hashtable
+Q: What is the difference?
+
+1. Thread Safety: `Hashtable` is Synchronized (Slow, locks the whole table). `HashMap` is Not Synchronized (Fast).
+
+2. Nulls: `HashMap` allows 1 null key & multiple null values. `Hashtable` throws `NullPointerException`.
+
+3. Status: `Hashtable` is legacy/obsolete. If you need thread safety, use `ConcurrentHashMap`, never `Hashtable`.

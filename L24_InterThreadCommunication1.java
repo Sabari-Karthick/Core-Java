@@ -17,10 +17,8 @@
  *                                 
  *                     
  *                                 
- *                                                   
- *                                 
  */
-class Producer1 extends Thread
+class Producer1 implements Runnable
 {
 	StringBuffer sb;//producer producing the data
 	boolean dataProvider = false;// variable for thread communication
@@ -35,22 +33,24 @@ class Producer1 extends Thread
 	 {
 	      for(int i=1;i<=10;i++)
 	      {
-	    	
 	    	  try {
-	    		  sb.append(i+",");
+				  sb.append(i);
+				  if (i < 10) {
+					  sb.append(",");
+				  }
 				Thread.sleep(100);
 				System.out.println("appending");
 			} catch (InterruptedException e) {
-			
 				e.printStackTrace();
 			}
 	      }
+
 	      dataProvider=true;
      }
 }
-class Consumer1 extends Thread
+class Consumer1 implements Runnable
 {
-	Producer1 producer;//producer object to get the get the produced object of SB
+	Producer1 producer;//producer object to get the produced object of SB
 	
 	public Consumer1(Producer1 producer) {
 		this.producer = producer;
@@ -58,14 +58,12 @@ class Consumer1 extends Thread
 
 	@Override
 	public void run() {
-		while(producer.dataProvider==false)
+		while(!producer.dataProvider)
 		{
 			try {Thread.sleep(50);} catch (InterruptedException e) {e.printStackTrace();}
 		}
 		//consume the data
-	
 		System.out.println(producer.sb);
-
 	}
 }
 /**
@@ -74,6 +72,9 @@ class Consumer1 extends Thread
  *This increases the waiting time of a thread and makes the CPU time idle,through which communication b/w 2 threads wont be efficient.
  */
 
+// Busy waiting is a technique where a thread continuously checks for a condition to be true without releasing the CPU time, which can lead to inefficient use of resources and increased waiting time for other threads.
+// In the above code, the consumer thread is in a busy waiting state as it continuously checks for the dataProvider variable to be true without releasing the CPU time, which can lead to inefficient use of resources and increased waiting time for other threads.
+// Here were the wait() and notify() methods come into play to make the communication between threads more efficient by allowing the consumer thread to release the CPU time while waiting for the producer thread to produce the data, and allowing the producer thread to notify the consumer thread when the data is ready for consumption.
 public class L24_InterThreadCommunication1 {//here the code is not efficient because the consumer needs to be in sleep state until  the producer thread finishes its sleep and release the lock
  public static void main(String[] args) {
 	Producer1 p = new Producer1();
