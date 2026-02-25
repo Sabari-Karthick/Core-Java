@@ -1,14 +1,14 @@
-class Producer2 extends Thread
+class Producer2 implements Runnable
 {
 	StringBuffer sb;
-	
+
 	 public Producer2() {
        sb = new StringBuffer();
-	
+
 	}
 
 	@Override
-	public void run() 
+	public void run()
 	 {
 	      synchronized (sb) {
 			for (int i = 1; i <= 10; i++)
@@ -22,10 +22,10 @@ class Producer2 extends Thread
 			}
 			sb.notify();
 		}
-	     
+
      }
 }
-class Consumer2 extends Thread
+class Consumer2 implements Runnable
 {
 	Producer2 producer;
 	

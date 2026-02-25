@@ -27,25 +27,41 @@ class K extends Thread
 	int res=0;
 	@Override
 	public void run() {
+
+		// Here this refers to the instance of the K.
 		synchronized (this) {//producer
-			System.out.println("K thread started");
+			System.out.println("K thread started, Acquired Lock");
 			for(int i=0;i<10;i++){
 				res+=i;
 			}
-			System.out.println("notification sent");
-			this.notify();//it needs to notify the lock is released 
+			System.out.println("K thread notification sent");
+
+			// notify() sends a signal but DOES NOT release the lock immediately.
+			// The lock is only released when we exit this synchronized block.
+			this.notify();//it needs to notify the lock is released
 		}
 		
 	}
 
 }
+
+/**
+ *
+ * It have one intentional Bad design of using thread as lock but the main thing is to show "Lock Handover" between 2 threads using wait and notify methods.
+ *
+ */
 public class L24_InterThreadCommunication2 {
  public static void main(String[] args) throws InterruptedException {
 	K k = new K();
 	k.start();
-	//consumer
+	// main thread acts as a consumer here
 	synchronized (k) {//here main holds the lock of the k object so the k_thread cannot work
 		System.out.println("Main thread is performing");
+
+		/* * k.wait() does two things:
+		 * 1. Pauses the Main thread.
+		 * 2. RELEASES the lock on 'k' so the K-thread can enter its run() method.
+		 */
 		k.wait();//the current executing thread releases the lock and it enter the wait(sleep)state until the lock is released by the other thread
 		System.out.println(k.res);
 		
